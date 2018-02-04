@@ -16,8 +16,8 @@ export const ROUTER_LIST = {
     },
     {
       path: "changelog",
-      // 'loadChildren': './nz-intro-changelog/nz-intro-changelog.module#NzIntroChangeLogModule',
-      label: "读书笔记"
+      'loadChildren': './nz-intro-changelog/nz-intro-changelog.module#NzIntroChangeLogModule',
+      label: "好风长吟"
     }
     // {
     //   path: "i18n",

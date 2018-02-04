@@ -1,130 +1,165 @@
 <div class="page-wrapper">
-  <header id="header" class="clearfix">
-    <div nz-row>
-      <div nz-col [nzXs]="'24'" [nzSm]="'8'" [nzMd]="'8'" [nzLg]="'4'">
-        <a id="logo" href>
-          <img alt="logo" src="/assets/images/avatar.jpg">
-          <span>啃书</span>
-        </a>
-      </div>
-      <div nz-col [nzXs]="'0'" [nzSm]="'16'" [nzMd]="'16'" [nzLg]="'20'" class="nav nav-hide">
-        <div id="search-box">
-          <nz-select [nzPlaceHolder]="'搜索关键字...'" [nzMode]="'combobox'" [(ngModel)]="searchComponent" (ngModelChange)="navigateToPage($event)">
-            <nz-option [nzValue]="component.path" [nzLabel]="component.label+' - '+component.zh" *ngFor="let component of componentList"></nz-option>
-          </nz-select>
-        </div>
-        <!-- <div class="version">
+    <header id="header" class="clearfix">
+        <div nz-row>
+            <div nz-col [nzXs]="'24'" [nzSm]="'8'" [nzMd]="'8'" [nzLg]="'4'">
+                <a id="logo" href>
+                    <img alt="logo" style="height:110px;width:110px;" src="/assets/images/avatar.jpg">
+                    <span style="line-height:110px;">啃书</span>
+                </a>
+            </div>
+            <div nz-col [nzXs]="'0'" [nzSm]="'16'" [nzMd]="'16'" [nzLg]="'20'" class="nav nav-hide">
+                <div id="search-box">
+                    <nz-select [nzPlaceHolder]="'搜索关键字...'" [nzMode]="'combobox'" [(ngModel)]="searchComponent" (ngModelChange)="navigateToPage($event)">
+                        <nz-option [nzValue]="component.path" [nzLabel]="component.label+' - '+component.zh" *ngFor="let component of componentList"></nz-option>
+                    </nz-select>
+                </div>
+                <!-- <div class="version">
           <nz-select [nzPlaceHolder]="'搜索关键字...'" [nzSize]="'small'" [ngModel]="currentVersion" (ngModelChange)="navigateToVersion($event)">
             <nz-option [nzValue]="version" [nzLabel]="version" *ngFor="let version of versionList"></nz-option>
           </nz-select>
         </div>
          -->
 
-        <ul nz-menu [nzMode]="'horizontal'" id="nav">
-          <li nz-menu-item nzSelected>
-            <a routerLink="/docs/angular/introduce">
-              <span>清风录</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </header>
-  <div class="main-wrapper">
-    <div nz-row>
-      <div nz-col [nzXs]="'24'" [nzSm]="'24'" [nzMd]="'6'" [nzLg]="'4'">
-        <ul nz-menu [nzMode]="'inline'" class="aside-container">
-          <li *ngFor="let intro of routerList.intro" nz-menu-item routerLinkActive="ant-menu-item-selected" style="padding-left: 24px;">
-            <a routerLink="{{intro.path}}">{{intro.label}}</a>
-          </li>
-          <li nz-submenu nzOpen>
-            <span title>
+                <ul nz-menu [nzMode]="'horizontal'" id="nav">
+                    <li nz-menu-item>
+                        <app-music-player *ngIf="playingSong" [song]="playingSong"></app-music-player>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="main-wrapper">
+        <div nz-row>
+            <div nz-col [nzXs]="'24'" [nzSm]="'24'" [nzMd]="'6'" [nzLg]="'4'">
+                <ul nz-menu [nzMode]="'inline'" class="aside-container">
+                    <li *ngFor="let intro of routerList.intro" nz-menu-item routerLinkActive="ant-menu-item-selected" style="padding-left: 24px;">
+                        <a routerLink="{{intro.path}}">{{intro.label}}</a>
+                    </li>
+                    <li nz-submenu nzClose>
+                        <span title>
               <h4>读书笔记</h4>
             </span>
-            <ul>
-              <li nz-menu-item routerLinkActive="ant-menu-item-selected" *ngFor="let group of routerList.components">
+                        <ul>
+                            <!-- <li nz-menu-item routerLinkActive="ant-menu-item-selected" *ngFor="let group of routerList.components">
                 {{group.name}}
+              </li> -->
+                            <li nz-submenu nzClose routerLinkActive="ant-menu-item-selected" *ngFor="let book of books">
+                                <span title style="padding-left:20px;"> {{book.name}}</span>
+                                <ul>
+                                    <li nz-menu-item routerLinkActive="ant-menu-item-selected" *ngFor="let note of book.notes;let i=index">
+                                        <a (click)="filePath=note.filePath">
+                                            <span class="chinese">{{i}}</span>
+                                            <span>{{note.title}}</span>
 
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <div nz-col class="main-container" [nzXs]="'24'" [nzSm]="'24'" [nzMd]="'18'" [nzLg]="'20'">
-        <router-outlet></router-outlet>
-        <div [innerHTML]="blogContent"></div>
-      </div>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li nz-menu-item routerLinkActive="ant-menu-item-selected" style="padding-left: 24px;">
+                        <a routerLink="/">工具</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div nz-col class="main-container" [nzXs]="'24'" [nzSm]="'24'" [nzMd]="'18'" [nzLg]="'20'">
+                <router-outlet></router-outlet>
+                <!-- <div [innerHTML]="blogContent"></div> -->
+                <markdown id="preview-contents" [path]="filePath"></markdown>
+
+                <!-- or use angular component -->
+
+
+
+                <!-- to load from remote URL -->
+
+                <!-- <div Markdown path="/path/to/readme.md"></div> -->
+
+                <!-- load remote source code with auto syntax highlighting -->
+
+                <!-- <markdown path="/docs/函数说明.md"></markdown> -->
+
+                <!-- <markdown path="/path/to/code.java"></markdown> -->
+
+                <!-- load remote source code from url stored in variable
+      (see additional details about variable binding in the next section) -->
+                <!-- <markdown [path]="urlVariable"></markdown> -->
+
+            </div>
+        </div>
     </div>
-  </div>
-  <footer id="footer">
-    <ul>
-      <li>
-        <h2>
-          <i class="anticon anticon-github"></i> GitHub</h2>
-        <div>
-          <a target="_blank " href="https://github.com/NG-ZORRO/ng-zorro-antd">
-            <span>源码仓库</span>
-          </a>
-        </div>
-        <div>
-          <a target="_blank " href="https://github.com/websemantics/awesome-ant-design">
-            <span>Awesome Ant Design</span>
-          </a>
-        </div>
-      </li>
-      <li>
-        <h2>
-          <i class="anticon anticon-link"></i>
-          <span>相关站点</span>
-        </h2>
-        <div>
-          <a href="http://www.angular.cn" target="_blank">Angular</a>
-          <span> - </span>
-          <span>中文网</span>
-        </div>
-        <div>
-          <a href="https://cli.angular.io/" target="_blank">CLI</a>
-          <span> - </span>
-          <span>脚手架工具</span>
-        </div>
-        <div>
-          <a href="https://ant.design/docs/react/introduce-cn" target="_blank">Ant Design</a>
-          <span> - </span>
-          <span>React版本</span>
-        </div>
-        <div>
-          <a target="_blank" rel="noopener noreferrer" href="https://antv.alipay.com/">AntV</a>
-          <span> - </span>
-          <span>数据可视化</span>
-        </div>
-        <div>
-          <a target="_blank" rel="noopener noreferrer" href="http://library.ant.design/">AntD Library</a>
-          <span> - </span>
-          <span>Axure 部件库</span>
-        </div>
-        <li>
-          <h2>
-            <i class="anticon anticon-customer-service"></i>
-            <span>社区</span>
-          </h2>
-          <div>
-            <a href="#/changelog">
-              <span>更新记录</span>
-            </a>
-          </div>
-          <div>
-            <a target="_blank" rel="noopener noreferrer" href="http://ng.ant.design/issue-helper/#/new-issue">
-              <span>报告 Bug</span>
-            </a>
-          </div>
-        </li>
-        <li>
-          <h2>Copyright © 2017</h2>
-          <div>
-            <span>计算平台事业部 & 阿里云事业群 </span>
-          </div>
-          <div>@NG-ZORRO</div>
-        </li>
-    </ul>
-  </footer>
+    <footer id="footer">
+        <ul>
+            <li>
+                <h2>
+                    <i class="anticon anticon-github"></i> GitHub</h2>
+                <div>
+                    <a target="_blank " href="https://github.com/NG-ZORRO/ng-zorro-antd">
+                        <span>源码仓库</span>
+                    </a>
+                </div>
+                <div>
+                    <a target="_blank " href="https://github.com/websemantics/awesome-ant-design">
+                        <span>Awesome Ant Design</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <h2>
+                    <i class="anticon anticon-link"></i>
+                    <span>相关站点</span>
+                </h2>
+                <div>
+                    <a href="http://www.angular.cn" target="_blank">Angular</a>
+                    <span> - </span>
+                    <span>中文网</span>
+                </div>
+                <div>
+                    <a href="https://cli.angular.io/" target="_blank">CLI</a>
+                    <span> - </span>
+                    <span>脚手架工具</span>
+                </div>
+                <div>
+                    <a href="https://ant.design/docs/react/introduce-cn" target="_blank">Ant Design</a>
+                    <span> - </span>
+                    <span>React版本</span>
+                </div>
+                <div>
+                    <a target="_blank" rel="noopener noreferrer" href="https://antv.alipay.com/">AntV</a>
+                    <span> - </span>
+                    <span>数据可视化</span>
+                </div>
+                <div>
+                    <a target="_blank" rel="noopener noreferrer" href="http://library.ant.design/">AntD Library</a>
+                    <span> - </span>
+                    <span>Axure 部件库</span>
+                </div>
+                <li>
+                    <h2>
+                        <i class="anticon anticon-customer-service"></i>
+                        <span>社区</span>
+                    </h2>
+                    <div>
+                        <a href="#/changelog">
+                            <span>更新记录</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a target="_blank" rel="noopener noreferrer" href="http://ng.ant.design/issue-helper/#/new-issue">
+                            <span>报告 Bug</span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <h2>Copyright © 2017</h2>
+                    <div>
+                        <span>计算平台事业部 & 阿里云事业群 </span>
+                    </div>
+                    <div>@NG-ZORRO</div>
+                </li>
+        </ul>
+    </footer>
 </div>
