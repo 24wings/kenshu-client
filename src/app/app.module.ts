@@ -4,12 +4,15 @@ import { NgZorroAntdModule } from "ng-zorro-antd";
 import { AppComponent } from "./app.component";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
-import { MarkdownModule } from 'angular2-markdown';
+import { MarkdownModule } from "angular2-markdown";
 
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MusicPlayerComponent } from './shared/music-player/music-player.component';
+import { MusicPlayerComponent } from "./shared/music-player/music-player.component";
+
+// service
+import { LrcParserService } from "./service/lrc-parser.service";
 
 @NgModule({
   declarations: [AppComponent, MusicPlayerComponent],
@@ -23,7 +26,7 @@ import { MusicPlayerComponent } from './shared/music-player/music-player.compone
     FormsModule,
     RouterModule.forRoot([])
   ],
-  providers: [],
+  providers: [LrcParserService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

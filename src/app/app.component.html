@@ -4,15 +4,16 @@
             <div nz-col [nzXs]="'24'" [nzSm]="'8'" [nzMd]="'8'" [nzLg]="'4'">
                 <a id="logo" href>
                     <img alt="logo" style="height:110px;width:110px;" src="/assets/images/avatar.jpg">
-                    <span style="line-height:110px;">啃书</span>
+                    <span style="line-height:110px;">刺月无影</span>
+                    <!-- <span>爱读书</span> -->
                 </a>
             </div>
             <div nz-col [nzXs]="'0'" [nzSm]="'16'" [nzMd]="'16'" [nzLg]="'20'" class="nav nav-hide">
-                <div id="search-box">
-                    <nz-select [nzPlaceHolder]="'搜索关键字...'" [nzMode]="'combobox'" [(ngModel)]="searchComponent" (ngModelChange)="navigateToPage($event)">
-                        <nz-option [nzValue]="component.path" [nzLabel]="component.label+' - '+component.zh" *ngFor="let component of componentList"></nz-option>
-                    </nz-select>
-                </div>
+                <!-- <div id="search-box"> -->
+                <!-- <nz-select [nzPlaceHolder]="'搜索关键字...'" [nzMode]="'combobox'" [(ngModel)]="searchComponent" (ngModelChange)="navigateToPage($event)"> -->
+                <!-- <nz-option [nzValue]="component.path" [nzLabel]="component.label+' - '+component.zh" *ngFor="let component of componentList"></nz-option> -->
+                <!-- </nz-select> -->
+                <!-- </div> -->
                 <!-- <div class="version">
           <nz-select [nzPlaceHolder]="'搜索关键字...'" [nzSize]="'small'" [ngModel]="currentVersion" (ngModelChange)="navigateToVersion($event)">
             <nz-option [nzValue]="version" [nzLabel]="version" *ngFor="let version of versionList"></nz-option>
@@ -32,13 +33,36 @@
         <div nz-row>
             <div nz-col [nzXs]="'24'" [nzSm]="'24'" [nzMd]="'6'" [nzLg]="'4'">
                 <ul nz-menu [nzMode]="'inline'" class="aside-container">
-                    <li *ngFor="let intro of routerList.intro" nz-menu-item routerLinkActive="ant-menu-item-selected" style="padding-left: 24px;">
+                    <!-- <li *ngFor="let intro of routerList.intro" nz-menu-item routerLinkActive="ant-menu-item-selected" style="padding-left: 24px;">
                         <a routerLink="{{intro.path}}">{{intro.label}}</a>
+                    </li> -->
+                    <li nz-menu-item routerLinkActive="ant-menu-item-selected" style="padding-left: 24px;">
+                        <span title (click)="filePath='/docs/readme/readme.md'">个人简介</span>
                     </li>
                     <li nz-submenu nzClose>
-                        <span title>
-              <h4>读书笔记</h4>
-            </span>
+                        <span title>好风长吟</span>
+                        <ul>
+                            <li nz-submenu nzClose routerLinkActive="ant-menu-item-selected" *ngFor="let category of diary">
+                                <span title style="padding-left:20px;"> {{category.title}}</span>
+                                <ul>
+                                    <li nz-menu-item routerLinkActive="ant-menu-item-selected" *ngFor="let note of category.notes;let i=index">
+                                        <a (click)="seeDiary(note.path)">
+                                            <!-- <span class="chinese">{{i}}</span> -->
+                                            <nz-badge [nzCount]="i+1" [nzStyle]="{
+                                                backgroundColor: '#87d068'
+                                              }"></nz-badge>
+                                            <span>{{note.title}}</span>
+
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li nz-submenu nzClose>
+                        <span title>读书笔记</span>
                         <ul>
                             <!-- <li nz-menu-item routerLinkActive="ant-menu-item-selected" *ngFor="let group of routerList.components">
                 {{group.name}}
@@ -48,7 +72,7 @@
                                 <ul>
                                     <li nz-menu-item routerLinkActive="ant-menu-item-selected" *ngFor="let note of book.notes;let i=index">
                                         <a (click)="filePath=note.filePath">
-                                            <span class="chinese">{{i}}</span>
+                                            <nz-badge [nzCount]="i+1" [nzStyle]="{backgroundColor: '#87d068'}"></nz-badge>
                                             <span>{{note.title}}</span>
 
                                         </a>
@@ -163,3 +187,26 @@
         </ul>
     </footer>
 </div>
+
+
+
+
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'永锁孤心模式...'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)"
+    (nzOnOk)="handleOk(password)">
+    <ng-template #modalContent>
+        <div nz-form>
+            <nz-alert [nzType]="'warning'" nzCloseable [nzMessage]="errorMsg" *ngIf="errorMsg"></nz-alert>
+            <div nz-form-item>
+                <div nz-form-control>
+                    <nz-input [nzType]="'password'" [(ngModel)]="password" [nzPlaceHolder]="'解锁'" [nzSize]="'large'">
+                        <ng-template #prefix>
+                            <i class="anticon anticon-lock"></i>
+                        </ng-template>
+                    </nz-input>
+
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+</nz-modal>
