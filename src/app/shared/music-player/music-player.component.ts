@@ -26,9 +26,9 @@ export class MusicPlayerComponent implements OnInit, AfterContentInit {
   set volume(num: number) {
     // this._volume = num * 100;
     this.audioEl.volume = num / 100;
-    console.log(this._volume);
+    // console.log(this._volume);
 
-    console.log(this.audioEl.volume);
+    // console.log(this.audioEl.volume);
   }
   _process: number;
   currentTime: Date;
@@ -65,9 +65,9 @@ export class MusicPlayerComponent implements OnInit, AfterContentInit {
   set process(num: number) {
     clearInterval(this.timmer);
     this._process = num;
-    console.log(this._process);
+    // console.log(this._process);
     this.audioEl.currentTime = this.audioEl.duration * num / 100;
-    console.log(this.audioEl.currentTime);
+    // console.log(this.audioEl.currentTime);
     this.play();
   }
   constructor(public http: HttpClient, public lrc: LrcParserService) {}
@@ -85,16 +85,16 @@ export class MusicPlayerComponent implements OnInit, AfterContentInit {
 
     this.lrcInfo = this.lrc.parse(lrcText);
 
-    console.log(this.lrcInfo);
-    console.log("play");
+    // console.log(this.lrcInfo);
+    // console.log("play");
     this.timmer = setInterval(() => {
-      console.log(this.audioEl.volume);
+      // console.log(this.audioEl.volume);
       this._process = this.audioEl.currentTime / this.audioEl.duration * 100;
       this.currentTime = new Date(this.audioEl.currentTime * 1000);
       this.duration = new Date(this.audioEl.duration * 1000);
       let data = this.lrcInfo.data.filter(item => {
         if (item.dt.getTime() < this.currentTime.getTime()) {
-          console.log(item.dt.getTime(), this.currentTime.getTime());
+          // console.log(item.dt.getTime(), this.currentTime.getTime());
 
           return true;
         } else {

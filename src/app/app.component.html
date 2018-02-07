@@ -1,3 +1,4 @@
+<div class="top-process-bar" [style]="{width:percent+'%'}"></div>
 <div class="page-wrapper">
     <header id="header" class="clearfix">
         <div nz-row>
@@ -91,8 +92,12 @@
             </div>
             <div nz-col class="main-container" [nzXs]="'24'" [nzSm]="'24'" [nzMd]="'18'" [nzLg]="'20'">
                 <router-outlet></router-outlet>
+
                 <!-- <div [innerHTML]="blogContent"></div> -->
+
+
                 <markdown id="preview-contents" [path]="filePath"></markdown>
+
 
                 <!-- or use angular component -->
 

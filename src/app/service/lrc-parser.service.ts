@@ -36,7 +36,7 @@ export class LrcParserService {
     let times = this._regTime.exec(lrcText)[0];
     let timesArr = lrcText.substring(lrcText.indexOf(times) - 1);
     let data = timesArr.split("\n").map(seg => {
-      console.log(seg);
+      // console.log(seg);
       let time = /\[\d+:\d+(\.\d+)?\]/.exec(seg)
         ? /\[\d+:\d+(\.\d+)?\]/
             .exec(seg)[0]

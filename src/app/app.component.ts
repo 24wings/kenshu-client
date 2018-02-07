@@ -1,5 +1,5 @@
 import { Title, DomSanitizer } from "@angular/platform-browser";
-import { Component } from "@angular/core";
+import { Component, AfterContentInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 
 import { ROUTER_LIST } from "./routes";
@@ -10,7 +10,8 @@ import { SafeHtml } from "@angular/platform-browser";
   templateUrl: "./app.component.html",
   styleUrls: ["./style/index.less"]
 })
-export class AppComponent {
+export class AppComponent implements AfterContentInit {
+  percent: number = 30;
   password: string = "";
   get auth(): boolean {
     return this.checkAuth();
@@ -133,7 +134,23 @@ export class AppComponent {
   };
 
   handleCancel = e => {
-    console.log(e);
+    // console.log(e);
     this.isVisible = false;
   };
+  ngAfterContentInit() {
+    // var image = <HTMLImageElement>document.getElementById("background");
+    // function run() {
+    //   image.onload = function() {
+    //     var engine = new window["RainyDay"]({
+    //       image: this
+    //     });
+    //     engine.rain([[1, 2, 800]]);
+    //     engine.rain([[3, 3, 0.88], [5, 5, 0.9], [6, 2, 1]], 100);
+    //   };
+    //   image.crossOrigin = "anonymous";
+    //   image.src = "/assets/lib/img/N7ETzFO.jpg";
+    // }
+    // window.onload = run;
+    // run();
+  }
 }

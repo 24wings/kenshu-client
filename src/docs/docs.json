@@ -1,18 +1,18 @@
 {
-    "ok": true,
-    "data": [
+  "ok": true,
+  "data": [
+    {
+      "name": "曼昆经济学原理",
+      "notes": [
         {
-            "name": "曼昆经济学原理",
-            "notes": [
-                {
-                    "title": "大纲",
-                    "filePath": "/docs/books/曼昆经济学原理/大纲.md"
-                },
-                {
-                    "title": "第一章:经济学十大定理",
-                    "filePath": "/docs/books/曼昆经济学原理/经济学十大原理.md"
-                }
-            ]
+          "title": "大纲",
+          "filePath": "/docs/books/曼昆经济学原理/大纲.md"
+        },
+        {
+          "title": "第一章:经济学十大定理",
+          "filePath": "/docs/books/曼昆经济学原理/经济学十大原理.md"
         }
-    ]
+      ]
+    }
+  ]
 }
